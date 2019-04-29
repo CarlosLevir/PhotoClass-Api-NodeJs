@@ -1,5 +1,5 @@
 {
-  "name": "dropbox-server",
+  "name": "photoclass-api",
   "version": "1.0.0",
   "main": "index.js",
   "author": "Carlos Levir",

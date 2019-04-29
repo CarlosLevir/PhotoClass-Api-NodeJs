@@ -1,20 +1,20 @@
 const File = require('../models/File');
-const Box = require('../models/Box');
+const Subject = require('../models/Subject');
 
 class FileController {
   async store(req, res) {
-    const box = await Box.findById(req.params.id);
+    const subject = await Subject.findById(req.params.id);
 
     const file = await File.create({
       title: req.file.originalname,
       path: req.file.key
     });
 
-    box.files.push(file);
+    subject.files.push(file);
 
-    await box.save();
+    await subject.save();
 
-    req.io.sockets.in(box._id).emit('file', file);
+    req.io.sockets.in(subject._id).emit('file', file);
 
     return res.json(file);
   }

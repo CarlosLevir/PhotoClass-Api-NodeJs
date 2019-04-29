@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Box = new mongoose.Schema(
+const Subject = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -13,4 +13,4 @@ const Box = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('Box', Box);
+module.exports = mongoose.model('Subject', Subject);
