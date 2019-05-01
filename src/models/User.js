@@ -11,14 +11,25 @@ const User = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      lowercase: true
+      lowercase: true,
+      validate: function validateEmail(email) {
+        return /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email);
+      }
     },
     password: {
       type: String,
       required: true,
-      select: false
+      select: false,
+      validate: function validatePassword(password) {
+        return password.length >= 8;
+      }
     },
-    subjects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Subject' }]
+    subjects: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Subject'
+      }
+    ]
   },
   {
     timestamps: true
