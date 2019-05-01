@@ -4,6 +4,9 @@ const AuthController = require('../controllers/AuthController');
 class UserController {
   async register(req, res) {
     const { name, email, password } = req.body;
+
+    if (!name || !email || !password) return res.status(400).json({ error: 'Invalid data' });
+
     try {
       if (await User.findOne({ email })) return res.status(400).json({ error: 'User already exists' });
 
@@ -19,7 +22,7 @@ class UserController {
 
       return res.json({ user, token });
     } catch (err) {
-      return res.status(400).json({ error: 'Registration failed' });
+      return res.status(400).json({ error: 'Registration failed. Please, verify your data' });
     }
   }
 
