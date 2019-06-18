@@ -3,10 +3,14 @@ const User = require('../models/User');
 
 class SubjectController {
   async store(req, res) {
-    const user = await User.findById(req.params.userId);
+    const { title } = req.body;
+    const { userId } = req;
+
+    const user = await User.findById(userId);
+
     const subject = await Subject.create({
-      title: req.body.title,
-      userId: req.body.userId
+      title,
+      userId
     });
 
     user.subjects.push(subject);
