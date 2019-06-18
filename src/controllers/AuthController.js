@@ -11,17 +11,27 @@ class AuthController {
 
   async authenticate(req, res) {
     const { email, password } = req.body;
-    const user = await User.findOne(email).select('+password');
+
+    const user = await User.findOne({ email })
+      .select('+password')
+      .populate({
+        path: 'subjects',
+        populate: {
+          path: 'files',
+          options: { sort: { createdAt: -1 } }
+        },
+        options: { sort: { createdAt: -1 } }
+      });
 
     if (!user) return res.status(400).json({ error: 'User not found' });
 
     if (!(await bcrypt.compare(password, user.password))) return res.status(400).json({ error: 'Invalid password' });
 
-    user.password = undefined;
-
     const token = this.generateToken({ id: user._id });
 
-    return res.json(user, token);
+    user.password = undefined;
+
+    return res.json({ user, token });
   }
 }
 
