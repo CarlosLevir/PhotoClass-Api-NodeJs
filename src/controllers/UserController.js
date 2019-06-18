@@ -5,6 +5,8 @@ class UserController {
   async register(req, res) {
     const { name, email, password } = req.body;
 
+    console.log(req.body);
+
     if (!name || !email || !password) return res.status(400).json({ error: 'Invalid data' });
 
     try {
@@ -24,12 +26,6 @@ class UserController {
     } catch (err) {
       return res.status(400).json({ error: 'Registration failed. Please, verify your data' });
     }
-  }
-
-  async show(req, res) {
-    const user = await User.findById(req.params.id);
-
-    return res.json(user);
   }
 }
 
