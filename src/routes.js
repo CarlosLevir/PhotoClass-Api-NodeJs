@@ -10,15 +10,14 @@ const FileController = require('./controllers/FileController');
 
 const routes = express.Router();
 
-routes.post('/register', UserController.register);
+routes.post('/signup', UserController.register);
 
-routes.post('/authenticate', AuthController.authenticate);
+routes.post('/signin', (...args) => AuthController.authenticate(...args));
 
 routes.use(authMiddleware);
 
-routes.get('/user/:id', UserController.show);
+routes.post('/subject', SubjectController.store);
 
-routes.post('/subject/:userId', SubjectController.store);
 routes.get('/subject/:id', SubjectController.show);
 
 routes.post('/subject/:id/files', multer(multerConfig).single('file'), FileController.store);
