@@ -17,7 +17,7 @@ class SubjectController {
 
     await user.save();
 
-    req.io.sockets.in(user._id).emit('subject', subject);
+    req.io.sockets.in(userId).emit('newSubject', subject);
 
     return res.json(subject);
   }
