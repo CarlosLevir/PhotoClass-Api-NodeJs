@@ -12,19 +12,18 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
 io.on('connection', (socket) => {
-  socket.on('connectRoom', (subject) => {
+  socket.on('connectUser', (user) => {
+    socket.join(user);
+  });
+  socket.on('connectSubject', (subject) => {
     socket.join(subject);
   });
 });
 
-mongoose.connect(
-  `mongodb+srv://${process.env.DATABASE_USERNAME}:${
-    process.env.DATABASE_PASSWORD
-  }@cluster0-afdwt.mongodb.net/dropbox?retryWrites=true`,
-  {
-    useNewUrlParser: true
-  }
-);
+mongoose.connect('mongodb://localhost:27017/photoclass', {
+  useCreateIndex: true,
+  useNewUrlParser: true
+});
 
 app.use((req, res, next) => {
   req.io = io;
